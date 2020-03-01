@@ -1,6 +1,6 @@
 <template>
   <div class="comp-content">
-    <div v-for="(task, idx) in tasks" :key="idx">
+    <div v-for="(task, idx) in filter_task" :key="idx">
         <input type="checkbox"><span>{{ task.task }}</span>
     </div>
 
@@ -12,31 +12,39 @@ export default {
   name: 'content',
   data () {
     return {
-      tasks: [ ]
+      tasks: [ 
+          {"task_id":0, "is_checked": false, "label_id": 0, "task": "Take care of home"},
+          {"task_id":1, "is_checked": false, "label_id": 2, "task": "Some procedure to give birth"},
+          {"task_id":2, "is_checked": false, "label_id": 0, "task": "Take a deep breath"},
+          {"task_id":3, "is_checked": false, "label_id": 1, "task": "Watching something fun"},
+          {"task_id":4, "is_checked": false, "label_id": 1, "task": "Do nothing"},
+          {"task_id":5, "is_checked": false, "label_id": 0, "task": "Clear data"},
+          {"task_id":6, "is_checked": false, "label_id": 1, "task": "Go to a dept. store and buy something"}
+        ],
+      label_id: null
+    }
+  },
+  methods: {
+    filter_by_label (label_id) {
+      this.label_id = label_id;
+    }
+  },
+  computed: {
+    filter_task: function() {
+      if (this.label_id == null) {
+        return this.tasks
+      } else {
+        let label_id = this.label_id;
+        return this.tasks.filter ( (task) => { return task['label_id'] == label_id })
+      }
     }
   },
   created () {
-    this.filter_by_label (null);
+    let master_tasks= [
+    ]
+    return master_tasks
+    this.tasks = master_tasks;
   },
-  methods: {
-    filter_by_label: function (label_id) {
-      let master_tasks= [
-            {"label_id": 0, "task": "Take care of home"},
-            {"label_id": 2, "task": "Some procedure to give birth"},
-            {"label_id": 0, "task": "Take a deep breath"},
-            {"label_id": 1, "task": "Watching something fun"},
-            {"label_id": 1, "task": "Do nothing"},
-            {"label_id": 0, "task": "Clear data"},
-            {"label_id": 1, "task": "Go to a dept. store and buy something"}
-      ]
-      if (label_id == null) {
-        this.tasks = master_tasks
-      } else {
-        console.log ("over here")
-        this.tasks = master_tasks.filter (function (e) { return e['label_id'] == label_id })
-      }
-    }
-  }
 }
 </script>
 
