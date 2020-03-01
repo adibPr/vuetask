@@ -1,7 +1,7 @@
 <template>
   <div class="comp-content">
     <div v-for="(task, idx) in filter_task" :key="idx">
-        <input type="checkbox"><span>{{ task.task }}</span>
+        <input type="checkbox" :checked="task.is_checked" @change='change_task(task)'><span>{{ task.task }}</span>
     </div>
 
   </div>
@@ -14,7 +14,7 @@ export default {
     return {
       tasks: [ 
           {"task_id":0, "is_checked": false, "label_id": 0, "task": "Take care of home"},
-          {"task_id":1, "is_checked": false, "label_id": 2, "task": "Some procedure to give birth"},
+          {"task_id":1, "is_checked": true, "label_id": 2, "task": "Some procedure to give birth"},
           {"task_id":2, "is_checked": false, "label_id": 0, "task": "Take a deep breath"},
           {"task_id":3, "is_checked": false, "label_id": 1, "task": "Watching something fun"},
           {"task_id":4, "is_checked": false, "label_id": 1, "task": "Do nothing"},
@@ -27,6 +27,11 @@ export default {
   methods: {
     filter_by_label (label_id) {
       this.label_id = label_id;
+    },
+    change_task (task) {
+      task['is_checked'] = !task['is_checked'];
+      console.log ("I'm changing here lho");
+      console.log (task)
     }
   },
   computed: {
